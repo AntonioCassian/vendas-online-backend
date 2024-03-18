@@ -1,4 +1,4 @@
-import { AddressEntity } from 'src/address/entityes/address.entity';
+import { AddressEntity } from 'src/address/entities/address.entity';
 import { StateEntity } from 'src/state/entityes/state.entity';
 
 import {

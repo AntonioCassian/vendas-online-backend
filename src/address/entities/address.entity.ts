@@ -1,5 +1,5 @@
 import { CityEntity } from 'src/city/entityes/city.entity';
-import { UserEntity } from 'src/user/interface/user.entity';
+import { UserEntity } from 'src/user/entities/user.entity';
 
 import {
   Column,

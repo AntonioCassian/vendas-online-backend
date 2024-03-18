@@ -1,12 +1,15 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create.user.dto';
+import { ReturnUserDto } from './dtos/returnUser.dto';
 import { UserService } from './user.service';
-import { UserEntity } from './interface/user.entity';
+import { UserEntity } from './entities/user.entity';
 
 @Controller('user')
 export class UserController {
 
-  constructor(private readonly userService: UserService) { }
+  constructor(private readonly userService: UserService) {}
+
+  @UsePipes(ValidationPipe)
   @Post()
   async CreateUser(
     @Body() createUser: CreateUserDto
@@ -15,11 +18,20 @@ export class UserController {
   }
 
   @Get()
-  async getAllUser(): Promise<UserEntity []> {
-    return this.userService.getAllUser();
+  async getAllUser(): Promise<ReturnUserDto []> {
+    return (await this.userService.getAllUser()).map(
+      (userEntity) => new ReturnUserDto(userEntity)
+    );
+  }
+
+  @Roles()
+  @Get('/:userId')
+  async getUserById(@Param('userId') userId: number): Promise<ReturnUserDto> {
+    return new ReturnUserDto(
+      await this.userService.getUserByIdUsingRelations(userId),
+    );
   }
 }
-
 
 // dtos: são informações transferidas
 //interface: são os dados do úsuario em si

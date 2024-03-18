@@ -2,6 +2,12 @@ import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity({ name: 'user' })
 export interface UserEntity {
+    name: string;
+    email: string;
+    phone: string;
+    cpf: string;
+    addresses: any;
+    id: number;
     @PrimaryGeneratedColumn('rowid')
     id: number;
 
